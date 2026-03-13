@@ -1,0 +1,64 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the Yeager store.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "A hack or mod menu product.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "features": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["active", "inactive"] }
+      },
+      "required": ["name", "description", "price", "imageUrl", "features", "createdAt", "status"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "An order placed by a user.",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "price": { "type": "number" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string", "format": "email" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "screenshotUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productId", "productName", "price", "userId", "userEmail", "status", "screenshotUrl", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user profiles and roles."
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Stores available products."
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Stores user orders."
+    }
+  }
+}
